@@ -100,8 +100,11 @@ public class NotePro extends JFrame {
 		//--------------------------------------------------------------------//
 		menuItemOuvrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				ouvrirFichier();
+				String chemin = "";
+				JFileChooser dialogue = new JFileChooser();
+				dialogue.showOpenDialog(null);
+				chemin = dialogue.getSelectedFile().toString();
+				editeur.setText(Fichier.ouvrir(chemin));
 			}
 		});
 		//--------------------------------------------------------------------//
@@ -123,7 +126,7 @@ public class NotePro extends JFrame {
 						int rVal = c.showSaveDialog(c);
 						if (rVal == JFileChooser.APPROVE_OPTION) {
 							String chemin = c.getCurrentDirectory().toString()+ "/"+ c.getSelectedFile().getName()+ ".txt";
-							enregistreFichier(chemin);
+							Fichier.enregistre(chemin, editeur.getText()) ;
 						}
 						break;
 					case 1:	editeur.setText("");break;
@@ -164,43 +167,5 @@ public class NotePro extends JFrame {
 
 	}
 
-	private void enregistreFichier(String chemin) {
-		try {
-
-			FileWriter fw = new FileWriter(chemin, true);
-			BufferedWriter output = new BufferedWriter(fw);
-			output.write(editeur.getText());
-			output.flush();
-			output.close();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-
-	}
-
-	private void ouvrirFichier() {
-		String chemin = "";
-		JFileChooser dialogue = new JFileChooser();
-		dialogue.showOpenDialog(null);
-		chemin = dialogue.getSelectedFile().toString();
-
-		FileInputStream fis;
-		FileChannel fc;
-
-		try {
-
-			fis = new FileInputStream(new File(chemin));
-			fc = fis.getChannel();
-			int size = (int) fc.size();
-			ByteBuffer bBuff = ByteBuffer.allocate(size);
-			fc.read(bBuff);
-			bBuff.flip();
-			String str = new String(bBuff.array(), "UTF-8");
-			editeur.setText(str);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 }

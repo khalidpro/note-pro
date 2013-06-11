@@ -1,5 +1,3 @@
-import java.awt.Color;
-
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -8,7 +6,7 @@ public class Apropos extends JFrame{
 
 	public Apropos()
 	{
-		String str="\n Note Pro\n"+
+		String str="\nNote Pro\n"+
 					"Projet IHM avec Swing\n"+
 					"réalisé par : TAHRI Khalid\n"+
 					":)";
