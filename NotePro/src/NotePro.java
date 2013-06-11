@@ -20,32 +20,30 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
+public class NotePro extends JFrame {
 
+	JTextArea editeur = new JTextArea();
 
-
-public class NotePro extends JFrame{
-
-	JTextArea editeur=new JTextArea();	
-	
-	public NotePro()
-	{
+	public NotePro() {
 		this.setTitle("Note Pro");
-		this.setSize(400,440);
+		this.setSize(400, 440);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setMenu();
 		this.setToolBar();
 		this.setEditeur();
 		this.setVisible(true);
-		
+
 	}
-	// Initialisation des menus  
+
+	// Initialisation des menus
 	private void setMenu()
 	{		
 		
@@ -113,35 +111,54 @@ public class NotePro extends JFrame{
 			}
 		});
 		//--------------------------------------------------------------------//
+		menuItemNouveau.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				if(!editeur.getText().equals(""))
+				{
+					int rep = JOptionPane.showConfirmDialog(null, "voulez-vous enregistre les modification ?!");
+					switch (rep) {
+					case 0:							
+						JFileChooser c = new JFileChooser();
+						int rVal = c.showSaveDialog(c);
+						if (rVal == JFileChooser.APPROVE_OPTION) {
+							String chemin = c.getCurrentDirectory().toString()+ "/"+ c.getSelectedFile().getName()+ ".txt";
+							enregistreFichier(chemin);
+						}
+						break;
+					case 1:	editeur.setText("");break;
+					}
+				}
+			}
+		});
 		//--------------------------------------------------------------------//
 		//--------------------------------------------------------------------//
 		
 		
 		
 	}
-	 // Initialisation de la barre d'outils 
-	private void setToolBar()
-	{
-		JToolBar toolBar=new JToolBar();
+
+	// Initialisation de la barre d'outils
+	private void setToolBar() {
+		JToolBar toolBar = new JToolBar();
 		JButton barNouveau = new JButton(new ImageIcon("images/file_new.png"));
 		JButton barEnregistre = new JButton(new ImageIcon("images/save.png"));
 		toolBar.add(barNouveau);
 		toolBar.add(barEnregistre);
 		toolBar.addSeparator();
-		
-		this.getContentPane().add(toolBar , BorderLayout.NORTH);
-		
-	} 
-	// Initialisation de l'editeur
-	private void setEditeur()
-	{
-		JScrollPane scroll =new JScrollPane(editeur);
-		this.getContentPane().add(scroll, BorderLayout.CENTER);
-		
+
+		this.getContentPane().add(toolBar, BorderLayout.NORTH);
+
 	}
-	
-	private void enregistreFichier(String chemin )
-	{
+
+	// Initialisation de l'editeur
+	private void setEditeur() {
+		JScrollPane scroll = new JScrollPane(editeur);
+		this.getContentPane().add(scroll, BorderLayout.CENTER);
+
+	}
+
+	private void enregistreFichier(String chemin) {
 		try {
 
 			FileWriter fw = new FileWriter(chemin, true);
@@ -152,16 +169,15 @@ public class NotePro extends JFrame{
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-		
+
 	}
-	
-	private void ouvrirFichier()
-	{
+
+	private void ouvrirFichier() {
 		String chemin = "";
 		JFileChooser dialogue = new JFileChooser();
 		dialogue.showOpenDialog(null);
 		chemin = dialogue.getSelectedFile().toString();
-		
+
 		FileInputStream fis;
 		FileChannel fc;
 
@@ -182,6 +198,3 @@ public class NotePro extends JFrame{
 		}
 	}
 }
-
-
-
