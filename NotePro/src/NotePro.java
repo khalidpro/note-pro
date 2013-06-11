@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -133,7 +135,8 @@ public class NotePro extends JFrame{
 	// Initialisation de l'editeur
 	private void setEditeur()
 	{
-		this.getContentPane().add(editeur, BorderLayout.CENTER);
+		JScrollPane scroll =new JScrollPane(editeur);
+		this.getContentPane().add(scroll, BorderLayout.CENTER);
 		
 	}
 	
