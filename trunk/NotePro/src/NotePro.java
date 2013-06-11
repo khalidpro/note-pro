@@ -40,13 +40,11 @@ public class NotePro extends JFrame {
 		this.setToolBar();
 		this.setEditeur();
 		this.setVisible(true);
-
 	}
 
 	// Initialisation des menus
 	private void setMenu()
-	{		
-		
+	{				
 		JMenuBar menuBar=new JMenuBar();
 		JMenu menuFichier=new JMenu("Fichier");
 		JMenuItem menuItemNouveau =new JMenuItem("Nouveau");
@@ -142,9 +140,11 @@ public class NotePro extends JFrame {
 			}
 		});
 		//--------------------------------------------------------------------//
+		//--------------------------------------------------------------------//
+		//--------------------------------------------------------------------//
+		//--------------------------------------------------------------------//
 		
-		
-		
+	
 	}
 
 	// Initialisation de la barre d'outils
