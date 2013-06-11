@@ -132,6 +132,12 @@ public class NotePro extends JFrame {
 			}
 		});
 		//--------------------------------------------------------------------//
+		menuItemAPropos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Apropos a =new Apropos();
+				
+			}
+		});
 		//--------------------------------------------------------------------//
 		
 		
