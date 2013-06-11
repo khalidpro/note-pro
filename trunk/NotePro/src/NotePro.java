@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,6 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 
@@ -66,23 +68,33 @@ public class NotePro extends JFrame{
 		// Menu Fichier
 		
 		menuBar.add(menuFichier);
-		menuFichier.add(menuItemNouveau);
+		menuFichier.setMnemonic('F');
+		menuFichier.add(menuItemNouveau);	
+		menuItemNouveau.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,KeyEvent.CTRL_MASK));
 		menuFichier.add(menuItemOuvrir);
+		menuItemOuvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_MASK));
 		menuFichier.add(menuItemEnregistre);
+		menuItemEnregistre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
 		menuFichier.add(menuItemEnregistreSous);
 		menuFichier.addSeparator();
 		menuFichier.add(menuItemQuitter);
+		menuItemQuitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));
 		
 		// Menu Edition
 		
 		menuBar.add(menuEdition);
+		menuEdition.setMnemonic('E');
 		menuEdition.add(menuItemCopier);
+		menuItemCopier.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,KeyEvent.CTRL_MASK));
 		menuEdition.add(menuItemCouper);
+		menuItemCouper.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,KeyEvent.CTRL_MASK));
 		menuEdition.add(menuItemColler);
+		menuItemColler.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,KeyEvent.CTRL_MASK));
 		
 		// Menu Aide
 		
 		menuBar.add(menuAide);
+		menuAide.setMnemonic('A');
 		menuAide.add(menuItemAPropos);
 	
 		//--------------------------------------------------------------------//
@@ -93,6 +105,11 @@ public class NotePro extends JFrame{
 			}
 		});
 		//--------------------------------------------------------------------//
+		menuItemQuitter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();				
+			}
+		});
 		//--------------------------------------------------------------------//
 		//--------------------------------------------------------------------//
 		//--------------------------------------------------------------------//
