@@ -164,6 +164,7 @@ public class NotePro extends JFrame {
 	// Initialisation de la barre d'outils
 	private void setToolBar() {
 		JToolBar toolBar = new JToolBar();
+		toolBar.setFloatable(false);
 		JButton barNouveau = new JButton(new ImageIcon("images/file_new.png"));
 		JButton barEnregistre = new JButton(new ImageIcon("images/save.png"));
 		toolBar.add(barNouveau);
