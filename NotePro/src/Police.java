@@ -27,6 +27,7 @@ public class Police extends JFrame {
 
 		this.setTitle("Police");
 		this.setSize(300, 300);
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 
 		// listes
