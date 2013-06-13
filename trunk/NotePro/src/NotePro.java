@@ -110,7 +110,8 @@ public class NotePro extends JFrame {
 		menuAide.setMnemonic('A');
 		menuAide.add(menuItemAPropos);
 
-		// ---------------------------Click Menu Ouvrir -----------------------------------------//
+		// Click Menu Ouvrir
+		// --------------------------------------------------------------------//
 		menuItemOuvrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String chemin = "";
@@ -120,54 +121,44 @@ public class NotePro extends JFrame {
 				editeur.setText(Fichier.ouvrir(chemin));
 			}
 		});
-		// ---------------------------Click Menu Ouitter -----------------------------------------//
+		// Click Menu Ouitter
+		// --------------------------------------------------------------------//
 		menuItemQuitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
-		// ---------------------------Click Menu Nouveau -----------------------------------------//
+		// Click Menu Nouveau
+		// --------------------------------------------------------------------//
 		menuItemNouveau.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				if (!editeur.getText().equals("")) {
-					int rep = JOptionPane.showConfirmDialog(null,
-							"voulez-vous enregistre les modification ?!");
-					switch (rep) {
-					case 0:
-						JFileChooser c = new JFileChooser();
-						int rVal = c.showSaveDialog(c);
-						if (rVal == JFileChooser.APPROVE_OPTION) {
-							String chemin = c.getCurrentDirectory().toString()
-									+ "/" + c.getSelectedFile().getName()
-									+ ".txt";
-							Fichier.enregistre(chemin, editeur.getText());
-						}
-						break;
-					case 1:
-						editeur.setText("");
-						break;
-					}
-				}
+				nouveau();
 			}
 		});
-		// --------------------------Click Menu A propos ------------------------------------------//
+		//Click Menu A propos
+		// --------------------------------------------------------------------//
 		menuItemAPropos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Apropos a = new Apropos();
 
 			}
 		});
-		// --------------------------Click Menu Police ------------------------------------------//
+		// Click Menu Police
+		// --------------------------------------------------------------------//
 		menuItemPolice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Police p=new Police();
+				Police p = new Police();
+			}
+		});
+		//Click Menu Enregistre Sous
+		// --------------------------------------------------------------------//
+		menuItemEnregistreSous.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				enregistre();
 			}
 		});
 		// --------------------------------------------------------------------//
 		// --------------------------------------------------------------------//
-		// --------------------------------------------------------------------//
-
 	}
 
 	// Initialisation de la barre d'outils
@@ -178,8 +169,16 @@ public class NotePro extends JFrame {
 		toolBar.add(barNouveau);
 		toolBar.add(barEnregistre);
 		toolBar.addSeparator();
-
 		this.getContentPane().add(toolBar, BorderLayout.NORTH);
+
+		// Click Bar d'outil Nouveau
+		// --------------------------------------------------------------------//
+		barNouveau.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				nouveau();
+			}
+		});
+		// --------------------------------------------------------------------//
 
 	}
 
@@ -188,6 +187,31 @@ public class NotePro extends JFrame {
 		JScrollPane scroll = new JScrollPane(editeur);
 		this.getContentPane().add(scroll, BorderLayout.CENTER);
 
+	}
+
+	private void enregistre() {
+		JFileChooser c = new JFileChooser();
+		int rVal = c.showSaveDialog(c);
+		if (rVal == JFileChooser.APPROVE_OPTION) {
+			String chemin = c.getCurrentDirectory().toString() + "/"
+					+ c.getSelectedFile().getName() + ".txt";
+			Fichier.enregistre(chemin, editeur.getText());
+		}
+	}
+
+	private void nouveau() {
+		if (!editeur.getText().equals("")) {
+			int rep = JOptionPane.showConfirmDialog(null,
+					"voulez-vous enregistre les modification ?!");
+			switch (rep) {
+			case 0:
+				enregistre();
+				break;
+			case 1:
+				editeur.setText("");
+				break;
+			}
+		}
 	}
 
 }
