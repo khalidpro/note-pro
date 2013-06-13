@@ -43,59 +43,74 @@ public class NotePro extends JFrame {
 	}
 
 	// Initialisation des menus
-	private void setMenu()
-	{				
-		JMenuBar menuBar=new JMenuBar();
-		JMenu menuFichier=new JMenu("Fichier");
-		JMenuItem menuItemNouveau =new JMenuItem("Nouveau");
-		JMenuItem menuItemOuvrir=new JMenuItem("Ouvrir...");
-		JMenuItem menuItemEnregistre =new JMenuItem("Enregistre");
-		JMenuItem menuItemEnregistreSous =new JMenuItem("Enregistre Sous");
-		JMenuItem menuItemQuitter =new JMenuItem("Quitter");
-		
-		JMenu menuEdition=new JMenu("Edition");
-		JMenuItem menuItemCopier =new JMenuItem("Copier");
-		JMenuItem menuItemCouper =new JMenuItem("Couper");
-		JMenuItem menuItemColler =new JMenuItem("Coller");
-		
-		JMenu menuAide=new JMenu("Aide");
-		JMenuItem menuItemAPropos =new JMenuItem("A propos du Note Pro");
-		
+	private void setMenu() {
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menuFichier = new JMenu("Fichier");
+		JMenuItem menuItemNouveau = new JMenuItem("Nouveau");
+		JMenuItem menuItemOuvrir = new JMenuItem("Ouvrir...");
+		JMenuItem menuItemEnregistre = new JMenuItem("Enregistre");
+		JMenuItem menuItemEnregistreSous = new JMenuItem("Enregistre Sous");
+		JMenuItem menuItemQuitter = new JMenuItem("Quitter");
+
+		JMenu menuEdition = new JMenu("Edition");
+		JMenuItem menuItemCopier = new JMenuItem("Copier");
+		JMenuItem menuItemCouper = new JMenuItem("Couper");
+		JMenuItem menuItemColler = new JMenuItem("Coller");
+
+		JMenu menuFormat = new JMenu("Format");
+		JMenuItem menuItemPolice = new JMenuItem("Police");
+
+		JMenu menuAide = new JMenu("Aide");
+		JMenuItem menuItemAPropos = new JMenuItem("A propos du Note Pro");
+
 		this.setJMenuBar(menuBar);
-		
+
 		// Menu Fichier
-		
+
 		menuBar.add(menuFichier);
 		menuFichier.setMnemonic('F');
-		menuFichier.add(menuItemNouveau);	
-		menuItemNouveau.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,KeyEvent.CTRL_MASK));
+		menuFichier.add(menuItemNouveau);
+		menuItemNouveau.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+				KeyEvent.CTRL_MASK));
 		menuFichier.add(menuItemOuvrir);
-		menuItemOuvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,KeyEvent.CTRL_MASK));
+		menuItemOuvrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+				KeyEvent.CTRL_MASK));
 		menuFichier.add(menuItemEnregistre);
-		menuItemEnregistre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,KeyEvent.CTRL_MASK));
+		menuItemEnregistre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+				KeyEvent.CTRL_MASK));
 		menuFichier.add(menuItemEnregistreSous);
 		menuFichier.addSeparator();
 		menuFichier.add(menuItemQuitter);
-		menuItemQuitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,KeyEvent.CTRL_MASK));
-		
+		menuItemQuitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
+				KeyEvent.CTRL_MASK));
+
 		// Menu Edition
-		
+
 		menuBar.add(menuEdition);
 		menuEdition.setMnemonic('E');
 		menuEdition.add(menuItemCopier);
-		menuItemCopier.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,KeyEvent.CTRL_MASK));
+		menuItemCopier.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
+				KeyEvent.CTRL_MASK));
 		menuEdition.add(menuItemCouper);
-		menuItemCouper.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,KeyEvent.CTRL_MASK));
+		menuItemCouper.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+				KeyEvent.CTRL_MASK));
 		menuEdition.add(menuItemColler);
-		menuItemColler.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,KeyEvent.CTRL_MASK));
-		
+		menuItemColler.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
+				KeyEvent.CTRL_MASK));
+
+		// Menu Format
+
+		menuBar.add(menuFormat);
+		menuFormat.setMnemonic('F');
+		menuFormat.add(menuItemPolice);
+
 		// Menu Aide
-		
+
 		menuBar.add(menuAide);
 		menuAide.setMnemonic('A');
 		menuAide.add(menuItemAPropos);
-	
-		//--------------------------------------------------------------------//
+
+		// ---------------------------Click Menu Ouvrir -----------------------------------------//
 		menuItemOuvrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String chemin = "";
@@ -105,46 +120,54 @@ public class NotePro extends JFrame {
 				editeur.setText(Fichier.ouvrir(chemin));
 			}
 		});
-		//--------------------------------------------------------------------//
+		// ---------------------------Click Menu Ouitter -----------------------------------------//
 		menuItemQuitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();				
+				dispose();
 			}
 		});
-		//--------------------------------------------------------------------//
+		// ---------------------------Click Menu Nouveau -----------------------------------------//
 		menuItemNouveau.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				if(!editeur.getText().equals(""))
-				{
-					int rep = JOptionPane.showConfirmDialog(null, "voulez-vous enregistre les modification ?!");
+				if (!editeur.getText().equals("")) {
+					int rep = JOptionPane.showConfirmDialog(null,
+							"voulez-vous enregistre les modification ?!");
 					switch (rep) {
-					case 0:							
+					case 0:
 						JFileChooser c = new JFileChooser();
 						int rVal = c.showSaveDialog(c);
 						if (rVal == JFileChooser.APPROVE_OPTION) {
-							String chemin = c.getCurrentDirectory().toString()+ "/"+ c.getSelectedFile().getName()+ ".txt";
-							Fichier.enregistre(chemin, editeur.getText()) ;
+							String chemin = c.getCurrentDirectory().toString()
+									+ "/" + c.getSelectedFile().getName()
+									+ ".txt";
+							Fichier.enregistre(chemin, editeur.getText());
 						}
 						break;
-					case 1:	editeur.setText("");break;
+					case 1:
+						editeur.setText("");
+						break;
 					}
 				}
 			}
 		});
-		//--------------------------------------------------------------------//
+		// --------------------------Click Menu A propos ------------------------------------------//
 		menuItemAPropos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Apropos a =new Apropos();
-				
+				Apropos a = new Apropos();
+
 			}
 		});
-		//--------------------------------------------------------------------//
-		//--------------------------------------------------------------------//
-		//--------------------------------------------------------------------//
-		//--------------------------------------------------------------------//
-		
-	
+		// --------------------------Click Menu Police ------------------------------------------//
+		menuItemPolice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Police p=new Police();
+			}
+		});
+		// --------------------------------------------------------------------//
+		// --------------------------------------------------------------------//
+		// --------------------------------------------------------------------//
+
 	}
 
 	// Initialisation de la barre d'outils
@@ -167,5 +190,4 @@ public class NotePro extends JFrame {
 
 	}
 
-	
 }
