@@ -11,6 +11,7 @@ public class Apropos extends JFrame{
 					"réalisé par : TAHRI Khalid\n"+
 					":)";
 		this.setTitle("[A propos de Note Pro]");
+		this.setIconImage(getToolkit().getImage("icon.png"));
 		this.setSize(260, 220);
 		this.setLocationRelativeTo(null);
 		JTextArea txt=new JTextArea(str);
