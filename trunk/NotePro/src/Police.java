@@ -40,7 +40,7 @@ public class Police extends JFrame {
 		this.setSize(300, 300);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
-		this.setIconImage(getToolkit().getImage("icon.png"));
+		this.setIconImage(getToolkit().getImage("images/icon.png"));
 
 		// listes
 		JPanel pantop = new JPanel();
