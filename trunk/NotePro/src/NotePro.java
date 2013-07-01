@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -29,7 +30,8 @@ import javax.swing.filechooser.FileFilter;
 
 public class NotePro extends JFrame {
 
-	JTextArea editeur = new JTextArea();
+	static JTextArea editeur = new JTextArea();
+	
 
 	public NotePro() {
 		this.setTitle("Note Pro");
@@ -148,6 +150,7 @@ public class NotePro extends JFrame {
 		menuItemPolice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Police p = new Police();
+
 			}
 		});
 		//Click Menu Enregistre Sous

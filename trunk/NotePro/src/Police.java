@@ -1,13 +1,17 @@
 import java.awt.BorderLayout;
-import java.awt.ScrollPane;
-
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+ 
 public class Police extends JFrame {
 
 	String[] fonts = { "Arial", "Courier New", "Georgia", "Comic Sans MS",
@@ -22,6 +26,13 @@ public class Police extends JFrame {
 
 	JButton btOK = new JButton("OK");
 	JButton btAnnuler = new JButton("Annuler");
+
+	JLabel lbl = new JLabel("Style de police");
+
+	String font = "Arial";
+	int style = 0;
+	int size = 12;
+	Font f = new Font(font, style, size);
 
 	public Police() {
 
@@ -45,6 +56,8 @@ public class Police extends JFrame {
 		// Bouton
 		JPanel panApercu = new JPanel();
 		panApercu.setBorder(BorderFactory.createTitledBorder("Aperçu :"));
+		lbl.setFont(f);
+		panApercu.add(lbl);
 		this.getContentPane().add(panApercu, BorderLayout.CENTER);
 
 		// Bouton
@@ -54,7 +67,58 @@ public class Police extends JFrame {
 		panBt.add(btOK);
 		this.getContentPane().add(panBt, BorderLayout.SOUTH);
 
+		// EVENTS
+		listeSizes.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				size = Integer.parseInt(listeSizes.getSelectedValue()
+						.toString());
+				f = new Font(font, style, size);
+				lbl.setFont(f);
+			}
+		});
+
+		listeFonts.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				font = listeFonts.getSelectedValue().toString();
+				f = new Font(font, style, size);
+				lbl.setFont(f);
+			}
+		});
+		listeStyles.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				int i = listeStyles.getSelectedIndex();
+				switch (i) {
+				case 0:
+					style = 0;
+					break;
+				case 1:
+					style = Font.ITALIC;
+					break;
+				case 2:
+					style = Font.BOLD;
+					break;
+				case 3:
+					style = Font.BOLD | Font.ITALIC;
+					break;
+				}
+				f = new Font(font, style, size);
+				lbl.setFont(f);
+			}
+		});
+		
+		btAnnuler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+				
+			}
+		});
+		btOK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				NotePro.editeur.setFont(f);
+				setVisible(false);				
+			}
+		});
+		
 		this.setVisible(true);
 	}
-
 }
