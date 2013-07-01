@@ -45,7 +45,7 @@ public class NotePro extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// changer l'icon par defaut de JFram
-		this.setIconImage(getToolkit().getImage("icon.png"));
+		this.setIconImage(getToolkit().getImage("images/icon.png"));
 
 		this.setMenu();
 		this.setToolBar();
