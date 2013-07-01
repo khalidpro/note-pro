@@ -1,5 +1,10 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -31,8 +36,7 @@ import javax.swing.filechooser.FileFilter;
 public class NotePro extends JFrame {
 
 	static JTextArea editeur = new JTextArea();
-	
-
+	Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 	public NotePro() {
 		this.setTitle("Note Pro");
 		this.setSize(400, 440);
@@ -137,7 +141,7 @@ public class NotePro extends JFrame {
 				nouveau();
 			}
 		});
-		//Click Menu A propos
+		// Click Menu A propos
 		// --------------------------------------------------------------------//
 		menuItemAPropos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -153,7 +157,7 @@ public class NotePro extends JFrame {
 
 			}
 		});
-		//Click Menu Enregistre Sous
+		// Click Menu Enregistre Sous
 		// --------------------------------------------------------------------//
 		menuItemEnregistreSous.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -161,7 +165,35 @@ public class NotePro extends JFrame {
 			}
 		});
 		// --------------------------------------------------------------------//
+		// Click Menu Enregistre Sous
 		// --------------------------------------------------------------------//
+		menuItemColler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					editeur.insert(clipboard.getData(DataFlavor.stringFlavor).toString(), editeur.getCaretPosition());
+				} catch (UnsupportedFlavorException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		// --------------------------------------------------------------------//
+		menuItemCopier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			      Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			        StringSelection data = new StringSelection(editeur.getSelectedText());
+			        clipboard.setContents (data, data);
+			}
+		});
+		// --------------------------------------------------------------------//
+				menuItemCouper.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+					        StringSelection data = new StringSelection(editeur.getSelectedText());
+					        clipboard.setContents (data, data);
+					        editeur.replaceSelection("");
+					}
+				});
 	}
 
 	// Initialisation de la barre d'outils
@@ -212,7 +244,7 @@ public class NotePro extends JFrame {
 				enregistre();
 				break;
 			case 1:
-				editeur.setText("");
+				editeur.setText(""); 
 				break;
 			}
 		}
