@@ -43,6 +43,10 @@ public class NotePro extends JFrame {
 		this.setSize(400, 440);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		// changer l'icon par defaut de JFram
+		this.setIconImage(getToolkit().getImage("icon.png"));
+
 		this.setMenu();
 		this.setToolBar();
 		this.setEditeur();
