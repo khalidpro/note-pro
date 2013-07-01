@@ -14,7 +14,7 @@ public class Fichier {
 	public static void enregistre(String chemin, String text) {
 		try {
 
-			FileWriter fw = new FileWriter(chemin, true);
+			FileWriter fw = new FileWriter(chemin, false);
 			BufferedWriter output = new BufferedWriter(fw);
 			output.write(text);
 			output.flush();
