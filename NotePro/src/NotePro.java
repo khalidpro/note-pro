@@ -34,9 +34,10 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 public class NotePro extends JFrame {
-
+	String file = "";
 	static JTextArea editeur = new JTextArea();
 	Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
 	public NotePro() {
 		this.setTitle("Note Pro");
 		this.setSize(400, 440);
@@ -123,8 +124,13 @@ public class NotePro extends JFrame {
 				String chemin = "";
 				JFileChooser dialogue = new JFileChooser();
 				dialogue.showOpenDialog(null);
-				chemin = dialogue.getSelectedFile().toString();
-				editeur.setText(Fichier.ouvrir(chemin));
+
+				if (dialogue.getSelectedFile() != null) {
+					chemin = dialogue.getSelectedFile().toString();
+					editeur.setText(Fichier.ouvrir(chemin));
+					file = chemin;
+					setTitle("Note Pro [" + file + "]");
+				}
 			}
 		});
 		// Click Menu Ouitter
@@ -164,36 +170,54 @@ public class NotePro extends JFrame {
 				enregistre();
 			}
 		});
+		// Click Menu Enregistre
 		// --------------------------------------------------------------------//
-		// Click Menu Enregistre Sous
+		menuItemEnregistre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (file.equals("")) {
+					enregistre();
+				} else {
+					Fichier.enregistre(file, editeur.getText());
+				}
+
+			}
+		});
+		// Click Menu Coller
 		// --------------------------------------------------------------------//
 		menuItemColler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					editeur.insert(clipboard.getData(DataFlavor.stringFlavor).toString(), editeur.getCaretPosition());
+					editeur.insert(clipboard.getData(DataFlavor.stringFlavor)
+							.toString(), editeur.getCaretPosition());
 				} catch (UnsupportedFlavorException | IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
+		// Click Menu Copier
 		// --------------------------------------------------------------------//
 		menuItemCopier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			      Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-			        StringSelection data = new StringSelection(editeur.getSelectedText());
-			        clipboard.setContents (data, data);
+				Clipboard clipboard = Toolkit.getDefaultToolkit()
+						.getSystemClipboard();
+				StringSelection data = new StringSelection(editeur
+						.getSelectedText());
+				clipboard.setContents(data, data);
 			}
 		});
+		// Click Menu Couper
 		// --------------------------------------------------------------------//
-				menuItemCouper.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-					        StringSelection data = new StringSelection(editeur.getSelectedText());
-					        clipboard.setContents (data, data);
-					        editeur.replaceSelection("");
-					}
-				});
+		menuItemCouper.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Clipboard clipboard = Toolkit.getDefaultToolkit()
+						.getSystemClipboard();
+				StringSelection data = new StringSelection(editeur
+						.getSelectedText());
+				clipboard.setContents(data, data);
+				editeur.replaceSelection("");
+			}
+		});
 	}
 
 	// Initialisation de la barre d'outils
@@ -214,6 +238,17 @@ public class NotePro extends JFrame {
 				nouveau();
 			}
 		});
+		// Click Bar d'outil Enregistre
+		// --------------------------------------------------------------------//
+		barEnregistre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (file.equals("")) {
+					enregistre();
+				} else {
+					Fichier.enregistre(file, editeur.getText());
+				}
+			}
+		});
 		// --------------------------------------------------------------------//
 
 	}
@@ -232,6 +267,8 @@ public class NotePro extends JFrame {
 			String chemin = c.getCurrentDirectory().toString() + "/"
 					+ c.getSelectedFile().getName() + ".txt";
 			Fichier.enregistre(chemin, editeur.getText());
+			file = chemin;
+			setTitle("Note Pro [" + file + "]");
 		}
 	}
 
@@ -241,10 +278,21 @@ public class NotePro extends JFrame {
 					"voulez-vous enregistre les modification ?!");
 			switch (rep) {
 			case 0:
-				enregistre();
+
+				if (file.equals("")) {
+					enregistre();
+				} else {
+					Fichier.enregistre(file, editeur.getText());
+				}
+
+				editeur.setText("");
+				file = "";
+				setTitle("Note Pro");
 				break;
 			case 1:
-				editeur.setText(""); 
+				editeur.setText("");
+				file = "";
+				setTitle("Note Pro");
 				break;
 			}
 		}
